@@ -1,7 +1,5 @@
-// ============================================================
 //  firebase.js — AI CyberHub
 //  Initialises Firebase and exports Auth / Firestore helpers
-// ============================================================
 
 const firebaseConfig = {
     apiKey: "AIzaSyBCEx1AaClIcOFr_wkHZixo7NGBorv0Faw",
@@ -263,3 +261,4 @@ window.updateDocument = updateDocument;
 window.incrementField = incrementField;
 window.getDocument = getDocument;
 window.seedFirestoreIfEmpty = seedFirestoreIfEmpty;
+
