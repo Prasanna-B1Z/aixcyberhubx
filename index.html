@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CyberHub - Digital Headquarters</title>
+    <meta name="description"
+        content="AI CyberHub — where AI meets Cybersecurity. Join CTFs, workshops, and teams. Hack, Learn, Compete, Secure.">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="matrix-loader">
+            <div class="matrix"></div>
+        </div>
+        <h2>AI CYBERHUB</h2>
+        <p>Initializing Secure Connection...</p>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>AI CyberHub</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#events" class="nav-link">Events</a></li>
+                <li><a href="#teams" class="nav-link">Teams</a></li>
+                <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="#feed" class="nav-link">Feed</a></li>
+                <li><a href="#profile" class="nav-link">Profile</a></li>
+            </ul>
+            <div class="nav-right-cluster">
+                <!-- Timezone widget (injected by timezone.js) -->
+                <div id="tzWidgetSlot"></div>
+                <!-- Notification Bell (injected by notifications.js) -->
+                <div id="notifBellSlot" class="notif-bell-wrapper"></div>
+                <!-- Auth buttons -->
+                <div class="nav-auth" id="navAuth">
+                    <button class="btn-login" onclick="showAuthModal('login')">
+                        <span class="btn-login-icon"><i class="fas fa-terminal"></i></span>
+                        <span>Login</span>
+                        <span class="btn-login-arrow"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                </div>
+            </div>
+            <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ══════════ Hero Section ══════════ -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <canvas id="particleCanvas"></canvas>
+            <div class="cyber-grid"></div>
+            <div class="scan-lines"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title glitch" data-text="AI CYBERHUB">
+                <span class="glitch-text">AI CYBERHUB</span>
+            </h1>
+            <p class="hero-subtitle">Building Tomorrow's Defenders Today</p>
+            <p class="hero-mission">Where AI meets Cybersecurity • Hack, Learn, Compete, Secure</p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="1240" id="stat-members">0</span>
+                    <span class="stat-label">Members</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="48" id="stat-events">0</span>
+                    <span class="stat-label">Events Hosted</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="32" id="stat-ctfs">0</span>
+                    <span class="stat-label">CTFs Won</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="95" id="stat-score">0</span>
+                    <span class="stat-label">Avg Score%</span>
+                </div>
+            </div>
+
+            <div class="events-ticker">
+                <div class="ticker-content" id="eventsTicker"></div>
+            </div>
+
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="scrollTo('events')">
+                    <i class="fas fa-rocket"></i> Join Next Event
+                </button>
+                <button class="btn-secondary" onclick="showAuthModal('signup')">
+                    <i class="fas fa-user-plus"></i> Become Member
+                </button>
+            </div>
+        </div>
+
+        <!-- Background Music -->
+        <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_2d5b61e2f3.mp3" loop
+            preload="auto"></audio>
+        <button class="music-toggle-btn" id="musicToggleBtn" onclick="toggleMusic()" title="Toggle Background Music">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+
+        <!-- AI Chatbot Button -->
+        <button class="ai-chat-btn" onclick="toggleAIChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+    </section>
+
+    <!-- ══════════ Events Section ══════════ -->
+    <section id="events" class="section events-section">
+        <div class="container">
+            <h2 class="section-title">Live Events</h2>
+            <div class="events-filter">
+                <button class="filter-btn active" data-filter="live">Live</button>
+                <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                <button class="filter-btn" data-filter="past">Past</button>
+                <button class="filter-btn" data-filter="all">All</button>
+            </div>
+            <div class="events-grid" id="eventsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ══════════ Teams Section ══════════ -->
+    <section id="teams" class="section">
+        <div class="container">
+            <h2 class="section-title">Teams</h2>
+            <div class="teams-header">
+                <button class="btn-primary" onclick="showCreateTeamModal()">
+                    <i class="fas fa-users"></i> Create Team
+                </button>
+                <input type="text" id="teamSearch" placeholder="Search teams..." class="search-input">
+            </div>
+            <div class="teams-grid" id="teamsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ══════════ Leaderboard Section ══════════ -->
+    <section id="leaderboard" class="section">
+        <div class="container">
+            <h2 class="section-title">Leaderboard</h2>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="weekly">Weekly</button>
+                <button class="tab-btn" data-tab="monthly">Monthly</button>
+                <button class="tab-btn" data-tab="alltime">All Time</button>
+            </div>
+            <div class="leaderboard-grid" id="leaderboardGrid"></div>
+        </div>
+    </section>
+
+    <!-- ══════════ Community Feed ══════════ -->
+    <section id="feed" class="section">
+        <div class="container">
+            <h2 class="section-title">Community Feed</h2>
+            <div class="feed-header">
+                <input type="text" id="postSearch" placeholder="Search posts..." class="search-input">
+                <button class="btn-primary" onclick="showNewPostModal()">
+                    <i class="fas fa-plus"></i> New Post
+                </button>
+            </div>
+            <div class="feed-posts" id="feedPosts"></div>
+        </div>
+    </section>
+
+    <!-- ══════════ Profile Section ══════════ -->
+    <section id="profile" class="section">
+        <div class="container">
+            <div class="profile-grid">
+                <div class="profile-card" id="profileCard">
+                    <div class="profile-placeholder">
+                        <i class="fas fa-user-circle"></i>
+                        <h3>Complete Your Profile</h3>
+                        <p>Login to showcase your skills, events, and achievements</p>
+                        <button class="btn-primary" onclick="showAuthModal('login')">Get Started</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════ Modals ══════════ -->
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="authContent"></div>
+        </div>
+    </div>
+
+    <!-- Event Detail Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content event-modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="eventDetail"></div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="teamContent"></div>
+        </div>
+    </div>
+
+    <!-- OTP / Phone Verification Modal -->
+    <div id="otpModal" class="modal">
+        <div class="modal-content" style="max-width:420px;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="otpContent"></div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div id="aiChat" class="ai-chat">
+        <div class="ai-chat-header">
+            <i class="fas fa-robot"></i>
+            <span>CyberGuard AI</span>
+            <button onclick="toggleAIChat()">&times;</button>
+        </div>
+        <div class="ai-chat-messages" id="aiMessages"></div>
+        <div class="ai-chat-input">
+            <input type="text" id="aiInput" placeholder="Ask about threats, events, or teams...">
+            <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            <button onclick="analyzeThreat()" class="ai-threat-btn">
+                <i class="fas fa-bug"></i> Analyze Threat
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (v9 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Config (gitignored) -->
+    <script src="config.js"></script>
+
+    <!-- Module scripts — order matters -->
+    <script src="firebase.js"></script>
+    <script src="ui.js"></script>
+    <script src="auth.js"></script>
+    <script src="notifications.js"></script>
+    <script src="events.js"></script>
+    <script src="profile.js"></script>
+    <script src="feed.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

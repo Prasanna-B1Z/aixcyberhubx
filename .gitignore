@@ -1,0 +1,9 @@
+# Secret keys — never commit these
+config.js
+
+# VS Code local settings
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
